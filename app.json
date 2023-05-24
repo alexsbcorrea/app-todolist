@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Todolist",
+    "slug": "aplicativo-todolist",
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "com.alexsbcorrea.todolist",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.alexsbcorrea.todolist",
+      "versionCode": 1
+    }
+  }
+}
