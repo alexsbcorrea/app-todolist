@@ -8,6 +8,7 @@ import {
   Button,
   Text,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -124,6 +125,21 @@ export default function ClosedTasks() {
   useFocusEffect(
     useCallback(() => {
       GetAllTasks();
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
     }, [])
   );
 

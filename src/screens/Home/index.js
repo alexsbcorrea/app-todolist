@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as C from "./styles";
-import { Platform, StatusBar, Linking } from "react-native";
+import { Platform, StatusBar, Linking, BackHandler } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Logo01 from "../../components/Logo01";
 import Button01 from "../../components/Button01";
 import Button02 from "../../components/Button02";
 
 export default function Home({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
+
   return (
     <C.Container>
       <StatusBar

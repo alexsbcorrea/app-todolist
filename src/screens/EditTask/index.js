@@ -6,6 +6,7 @@ import {
   Text,
   Share,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";

@@ -9,6 +9,7 @@ import {
   Button,
   Text,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -68,7 +69,6 @@ export default function AllTasks() {
   async function EditTask(id) {
     navigation.navigate("EditTask", { id: id });
   }
-
   async function RemoveTask(id) {
     try {
       const response = await api.delete(`/tasks/remove/${id}`, {
@@ -81,7 +81,6 @@ export default function AllTasks() {
       console.log(error);
     }
   }
-
   function LimparFiltro() {
     setFilter("Todas");
   }
@@ -143,6 +142,16 @@ export default function AllTasks() {
   useFocusEffect(
     useCallback(() => {
       GetAllTasks();
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
     }, [])
   );
 

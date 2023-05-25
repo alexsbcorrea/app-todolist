@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Text } from "react-native";
 import * as C from "./styles";
-import { Platform, StatusBar, ActivityIndicator } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  ActivityIndicator,
+  BackHandler,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout, profileupdate } from "../../features/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,6 +40,21 @@ export default function Profile({ navigation }) {
   const [visiblePassword, setVisiblePassword] = useState(true);
   const [visibleConfPassword, setVisibleConfPassword] = useState(true);
   const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
 
   async function ChangePassword(id) {
     navigation.navigate("ChangePassword", { id: user.id });

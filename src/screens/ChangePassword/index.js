@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Text } from "react-native";
 import * as C from "./styles";
-import { Platform, StatusBar, ActivityIndicator } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  ActivityIndicator,
+  BackHandler,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout, profileupdate } from "../../features/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";

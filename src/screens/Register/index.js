@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import * as C from "./styles";
-import { Platform, StatusBar, ActivityIndicator } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  ActivityIndicator,
+  BackHandler,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { register, login, logout } from "../../features/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,6 +31,21 @@ export default function Register({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(true);
   const [visibleConfPassword, setVisibleConfPassword] = useState(true);
+
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
 
   const user = {
     firstname: name,

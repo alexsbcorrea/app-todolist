@@ -8,6 +8,7 @@ import {
   Button,
   Text,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,6 +31,21 @@ export default function PendingTasks() {
   const [filter, setFilter] = useState("Todas");
   const [tasks, setTasks] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
 
   async function ClosedTask(id) {
     try {

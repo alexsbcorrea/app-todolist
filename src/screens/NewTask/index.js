@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import * as C from "./styles";
-import { Platform, StatusBar, Text } from "react-native";
+import { Platform, StatusBar, Text, BackHandler } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,12 +28,32 @@ export default function NewTask({ navigation }) {
   const [time, setTime] = useState(new Date(Date.now()));
   const [categorie, setCategorie] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [changeDate, setChangeDate] = useState(false);
+  const [changeTime, setChangeTime] = useState(false);
+  const [changeCategorie, setChangeCategorie] = useState(false);
+  const [blankDate, setBlankDate] = useState("");
+  const [blankTime, setBlankTime] = useState("");
 
   useFocusEffect(
     useCallback(() => {
-      setDate(new Date(Date.now()));
-      setTime(new Date(Date.now()));
-      setCategorie(categories[0]);
+      const backAction = () => {
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setChangeDate(false);
+      setChangeTime(false);
+      setChangeCategorie(false);
     }, [])
   );
 
@@ -137,6 +157,7 @@ export default function NewTask({ navigation }) {
         ["date"]: dateF,
       };
     });
+    setChangeDate(true);
   }
 
   function onChangeTime(event, value) {
@@ -149,6 +170,7 @@ export default function NewTask({ navigation }) {
         ["time"]: value.toLocaleTimeString().slice(0, 5),
       };
     });
+    setChangeTime(true);
   }
 
   function onSelect(selectedItem, index) {
@@ -159,6 +181,7 @@ export default function NewTask({ navigation }) {
         ["categorie"]: selectedItem,
       };
     });
+    setChangeCategorie(true);
   }
 
   return (
@@ -196,10 +219,12 @@ export default function NewTask({ navigation }) {
         ></OneInput>
         <DoubleInputDT
           label1="Data"
-          value1={date.toLocaleDateString() || ""}
+          value1={changeDate ? date.toLocaleDateString() : blankDate}
           onPress1={ShowDatePicker}
           label2="Horário"
-          value2={time.toLocaleTimeString().slice(0, 5) || ""}
+          value2={
+            changeTime ? time.toLocaleTimeString().slice(0, 5) : blankTime
+          }
           onPress2={ShowTimePicker}
         ></DoubleInputDT>
 

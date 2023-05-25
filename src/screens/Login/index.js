@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as C from "./styles";
-import { Keyboard, Platform, StatusBar, ActivityIndicator } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  StatusBar,
+  ActivityIndicator,
+  BackHandler,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../../features/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,6 +35,22 @@ export default function Login({ navigation }) {
     email: email,
     password: password,
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      const backAction = () => {
+        BackHandler.exitApp();
+        return;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      return () => backHandler.remove();
+    })
+  );
 
   async function LoginUser() {
     if (!email) {

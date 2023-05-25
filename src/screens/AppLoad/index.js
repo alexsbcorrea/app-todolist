@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import * as C from "./styles";
-import { Platform, StatusBar, Linking, ActivityIndicator } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  Linking,
+  ActivityIndicator,
+  BackHandler,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -63,6 +69,19 @@ export default function AppLoad({ navigation }) {
       navigation.navigate("Login");
     }
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  });
 
   useEffect(() => {
     CheckUserLogged();
