@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import * as C from "./styles";
 import {
   Platform,
@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { register, login, logout } from "../../features/user/userSlice";
+import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Logo01 from "../../components/Logo01";
