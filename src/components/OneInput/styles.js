@@ -27,6 +27,7 @@ export const TextInput = styled.TextInput`
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity``;
+
 export const ContIcon = styled.View`
   height: ${RFPercentage(7)}px;
   width: ${RFPercentage(7)}px;
@@ -37,4 +38,10 @@ export const ContIcon = styled.View`
   bottom: 0;
   z-index: 9;
   box-sizing: border-box;
+`;
+
+export const TextError = styled.Text`
+  font-family: ${(props) => props.theme.FONTS.BOLD};
+  font-size: ${RFPercentage(1.5)}px;
+  color: ${(props) => props.theme.COLORS.COLOR07};
 `;

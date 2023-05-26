@@ -82,13 +82,10 @@ export default function Register({ navigation }) {
       alert("As senhas não correspondem");
       return;
     }
+
+    setEmail(email.toLowerCase());
+
     try {
-      console.log(user.firstname);
-      console.log(user.lastname);
-      console.log(user.email);
-      console.log(user.password);
-      console.log(user.confirmPassword);
-      console.log(user.acceptterms);
       setIsLoading(true);
       const response = await api.post("/users/register", user);
       console.log(response.data);
@@ -118,6 +115,13 @@ export default function Register({ navigation }) {
 
       dispatch(login(data));
       setIsLoading(false);
+
+      setName("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+
       navigation.navigate("AllTasksRoutes");
     } catch (error) {
       console.log(error.response?.status);

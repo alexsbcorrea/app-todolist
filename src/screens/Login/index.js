@@ -39,8 +39,7 @@ export default function Login({ navigation }) {
   useFocusEffect(
     useCallback(() => {
       const backAction = () => {
-        BackHandler.exitApp();
-        return;
+        return true;
       };
 
       const backHandler = BackHandler.addEventListener(
@@ -93,6 +92,8 @@ export default function Login({ navigation }) {
 
       dispatch(login(data));
       setIsLoading(false);
+      setEmail("");
+      setPassword("");
       navigation.navigate("AllTasksRoutes");
     } catch (error) {
       console.log(error.response.status);
@@ -119,6 +120,7 @@ export default function Login({ navigation }) {
         inputMode="email"
         readOnly={false}
         secureTextEntry={false}
+        errorValidation={"E-mail inválido"}
       ></OneInput>
       <OneInput
         label="Senha"

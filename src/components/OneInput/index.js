@@ -16,6 +16,7 @@ export default function OneInput({
   secret,
   visibleContent,
   autoComplete,
+  errorValidation,
 }) {
   const theme = useTheme();
   const [focus, setFocus] = useState(false);
