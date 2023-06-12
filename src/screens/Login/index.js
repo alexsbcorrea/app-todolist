@@ -97,7 +97,12 @@ export default function Login({ navigation }) {
       navigation.navigate("AllTasksRoutes");
     } catch (error) {
       console.log(error.response.status);
-      alert(error.response.data.message);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Falha na Rede. Tente novamente mais tarde.");
+      }
+
       setIsLoading(false);
     }
   }
